@@ -1,0 +1,24 @@
+{% extends "wallet/base.html" %}
+
+{% block page_content %}
+    <a href="{% url 'income_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Income</span></a>
+    <a href="{% url 'outcome_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Outcome</span></a>
+    <a href="{% url 'transaction_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Transaction</span></a>
+    <h1>All my accounts</h1>
+    <div>
+        <table>
+            <tr>
+                {% for account in accounts %}
+                    <td>
+                        <h1><a href="{% url 'account_edit' pk=account.pk %}">{{ account.name }}</a></h1>
+                        <p>Balance: {{ account.balance }}</p>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h1><a href="/account/new">New account</a></h1>
+    </div>
+    <a href="{% url 'category_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Category</span></a>
+{% endblock %}
