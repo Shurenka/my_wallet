@@ -1,5 +1,9 @@
 {% extends "wallet/base.html" %}
 
+{%  block show_balance %}
+    <p>Balance: {{  balance|safe }}   </p>
+{% endblock %}
+
 {% block page_content %}
     <a href="{% url 'income_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Income</span></a>
     <a href="{% url 'outcome_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Outcome</span></a>

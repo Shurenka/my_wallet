@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
@@ -7,7 +8,8 @@ from .forms import IncomeForm, AccountForm, OutcomeForm, CategoryForm, Transacti
 
 def all_accounts(request):
     accounts = Account.objects.all()
-    return render(request, 'wallet/all_accounts.html', {'accounts': accounts})
+    balance = Account.objects.filter(take_into_account=True).aggregate(Sum('balance'))['balance__sum']
+    return render(request, 'wallet/all_accounts.html', {'accounts': accounts, 'balance': balance})
 
 
 def account_new(request):
