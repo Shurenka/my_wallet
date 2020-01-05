@@ -4,7 +4,7 @@
     <p>Balance: {{  balance|safe }}   </p>
 {% endblock %}
 
-{% block page_content %}
+{% block accounts_list %}
     <a href="{% url 'income_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Income</span></a>
     <a href="{% url 'outcome_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Outcome</span></a>
     <a href="{% url 'transaction_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Transaction</span></a>
@@ -22,7 +22,23 @@
         </table>
     </div>
     <div>
-        <h1><a href="/account/new">New account</a></h1>
+        <a href="{% url 'account_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Account</span></a>
+    </div>
+{% endblock %}
+
+{% block categories_list %}
+    <h1>All categories</h1>
+    <div>
+        <table>
+            <tr>
+                {% for category in categories %}
+                    <td>
+                        <h1><a href="{% url 'category_edit' pk=category.pk %}">{{ category.name }}</a></h1>
+                        <p>Balance: {{ category.get_monthly_outcome }}</p>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
     </div>
     <a href="{% url 'category_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Category</span></a>
 {% endblock %}

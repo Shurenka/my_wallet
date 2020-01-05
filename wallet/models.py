@@ -64,7 +64,11 @@ class Category(models.Model):
 
     def get_monthly_outcome(self, month=timezone.now().month):
         #month = 12
-        return Outcome.objects.filter(category=self.pk, date__month=month).aggregate(Sum('total'))['total__sum']
+        monthly = Outcome.objects.filter(category=self.pk, date__month=month)\
+            .aggregate(Sum('total'))['total__sum']
+        if monthly is None:
+            return 0.0
+        return monthly
 
 
 class Outcome(models.Model):

@@ -7,9 +7,13 @@ from .forms import IncomeForm, AccountForm, OutcomeForm, CategoryForm, Transacti
 
 
 def all_accounts(request):
-    accounts = Account.objects.all()
-    balance = Account.objects.filter(take_into_account=True).aggregate(Sum('balance'))['balance__sum']
-    return render(request, 'wallet/all_accounts.html', {'accounts': accounts, 'balance': balance})
+    accounts = Account.objects.all().order_by('pk')
+    balance = Account.objects.filter(take_into_account=True)\
+        .aggregate(Sum('balance'))['balance__sum']
+    categories = Category.objects.all()
+    return render(request, 'wallet/all_accounts.html',
+                  {'accounts': accounts, 'balance': balance,
+                   'categories': categories})
 
 
 def account_new(request):
@@ -93,7 +97,8 @@ def account_edit(request, pk):
 
 def all_categories(request):
     categories = Category.objects.all()
-    return render(request, 'wallet/all_categories.html', {'categories': categories})
+    return render(request, 'wallet/all_categories.html',
+                  {'categories': categories})
 
 
 def category_edit(request, pk):
